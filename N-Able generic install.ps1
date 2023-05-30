@@ -24,7 +24,7 @@ function Get-RMMInstaller {
         {
 
             $script:RMMParams = @{
-                uri = "https://control.techary.com/download/2022.3.0.46/winnt/N-central/WindowsAgentSetup.exe"
+                uri = "https://control.techary.com/download/current/winnt/N-central/WindowsAgentSetup.exe"
                 outfile = "C:\temp\WindowsAgentSetup.exe"
             }
             $ProgressPreference = 'SilentlyContinue'
