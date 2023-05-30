@@ -1,3 +1,11 @@
+Param(
+    [Parameter(Mandatory=$True)][String]$script:CustomerID,
+    [Parameter(Mandatory=$True)][string]$script:token,
+    [Parameter(Mandatory=$True)][string]$script:serveraddress,
+    [Parameter(Mandatory=$True)][String]$script:uri,
+    [Parameter(Mandatory=$True)][String]$script:outfile
+)
+
 Start-Transcript "C:\temp\rmminstall.log"
 
 function Get-InstallStatus {
@@ -24,8 +32,8 @@ function Get-RMMInstaller {
         {
 
             $script:RMMParams = @{
-                uri = "https://control.techary.com/download/current/winnt/N-central/WindowsAgentSetup.exe"
-                outfile = "C:\temp\WindowsAgentSetup.exe"
+                uri = $script:uri
+                outfile = $script:outfile
             }
             $ProgressPreference = 'SilentlyContinue'
             Invoke-WebRequest @RMMParams -ErrorAction stop
@@ -58,7 +66,7 @@ function Invoke-RMMInstaller {
     try
         {
 
-            C:\temp\WindowsAgentSetup.exe /S /v" /qn CUSTOMERID=$CustomerID CUSTOMERSPECIFIC=1 REGISTRATION_TOKEN=$Token SERVERPROTOCOL=HTTPS SERVERADDRESS=control.techary.com SERVERPORT=443 "
+            C:\temp\WindowsAgentSetup.exe /S /v" /qn CUSTOMERID=$CustomerID CUSTOMERSPECIFIC=1 REGISTRATION_TOKEN=$Token SERVERPROTOCOL=HTTPS SERVERADDRESS=$serveraddress SERVERPORT=443 "
 
         }
     catch
@@ -86,22 +94,8 @@ function Invoke-RMMInstaller {
 }
 
 Get-InstallStatus
-write-host $(Get-Date -Format u) "[Information] Setting customerID"
-$script:CustomerID = "" #attained via N-Able > Administration > customers
-if ($null -ne $CustomerID)
-    {
-
-        write-host $(Get-Date -Format u) "[Information] ID set to $customerID"
-
-    }
-write-host $(Get-Date -Format u) "[Information] Setting token"
-$script:token = "" #Attained via N-able > Selecting the company in top left > actions > Download agent/probe > get registration token
-if ($null -ne $token)
-    {
-
-        write-host $(Get-Date -Format u) "[Information] Token set to $token"
-
-    }
+write-host $(Get-Date -Format u) "[Information] ID set to $customerID"
+ write-host $(Get-Date -Format u) "[Information] Token set to $token"
 get-rmminstaller
 if (test-path $RMMParams.outfile)
     {
