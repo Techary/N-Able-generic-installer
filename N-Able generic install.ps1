@@ -1,8 +1,7 @@
 Param(
     [Parameter(Mandatory=$True)][String]$script:CustomerID,
     [Parameter(Mandatory=$True)][string]$script:token,
-    [Parameter(Mandatory=$True)][string]$script:serveraddress,
-    [Parameter(Mandatory=$True)][String]$script:uri,
+    [Parameter(Mandatory=$True)][string]$script:serveraddress
 )
 
 Start-Transcript "C:\temp\rmminstall.log"
@@ -31,7 +30,7 @@ function Get-RMMInstaller {
         {
 
             $script:RMMParams = @{
-                uri = $script:uri
+                uri = "$script:serveraddress/download/current/winnt/N-central/WindowsAgentSetup.exe"
                 outfile = "C:\temp\WindowsAgentSetup.exe"
             }
             $ProgressPreference = 'SilentlyContinue'
