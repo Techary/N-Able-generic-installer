@@ -3,7 +3,6 @@ Param(
     [Parameter(Mandatory=$True)][string]$script:token,
     [Parameter(Mandatory=$True)][string]$script:serveraddress,
     [Parameter(Mandatory=$True)][String]$script:uri,
-    [Parameter(Mandatory=$True)][String]$script:outfile
 )
 
 Start-Transcript "C:\temp\rmminstall.log"
@@ -33,7 +32,7 @@ function Get-RMMInstaller {
 
             $script:RMMParams = @{
                 uri = $script:uri
-                outfile = $script:outfile
+                outfile = "C:\temp\WindowsAgentSetup.exe"
             }
             $ProgressPreference = 'SilentlyContinue'
             Invoke-WebRequest @RMMParams -ErrorAction stop
